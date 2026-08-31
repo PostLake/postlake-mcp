@@ -1,0 +1,49 @@
+{
+  "name": "@postlake/openclaw-plugin",
+  "version": "0.1.0",
+  "description": "PostLake plugin for OpenClaw: publish, schedule and measure social posts across 9 networks from one MCP-native API",
+  "license": "MIT",
+  "author": "PostLake <support@postlake.dev>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "openclaw": ">=2026.8.0"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.52"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PostLake/postlake-mcp.git",
+    "directory": "openclaw"
+  },
+  "homepage": "https://postlake.dev",
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "clawhub",
+    "postlake",
+    "social-media",
+    "mcp",
+    "instagram",
+    "tiktok",
+    "linkedin",
+    "youtube"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": "1.0.0"
+    },
+    "build": {
+      "openclawVersion": "2026.8.1"
+    }
+  }
+}
