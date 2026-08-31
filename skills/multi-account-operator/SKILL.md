@@ -1,15 +1,14 @@
 ---
-name: postlake-operator
+name: multi-account-operator
 description: >
- Run many social accounts through an AI agent without burning them. Covers
- spacing, per-account caption variation, reading PostLake targets[] instead of
- one vague error, telling a platform restriction apart from a real failure,
- agent guardrails, and recovery for dead tokens. For operators already posting,
- not for a first account.
+ Multi-account social media operator for AI agents. Run 15 to 400+ accounts
+ without burning them: spacing, per-account caption variation, reading PostLake
+ targets[] instead of one vague error, restrictions vs real failures, agent
+ guardrails. For operators already posting, not a first account.
 last-updated: 2026-08-31
 ---
 
-# PostLake operator
+# Multi-Account Social Media Operator
 
 For people (and agents) running many accounts: agencies, portfolios, niche
 networks. This is not a growth coach. It assumes you already know what to

@@ -1,14 +1,13 @@
 ---
-name: postlake-growth
+name: b2c-marketing
 description: >
- Seven-day tutorial plus organic growth coach for AI agents posting to TikTok,
- Instagram, YouTube, LinkedIn, X and the rest through PostLake. Covers agent
- setup, the 7-day warmup, content-market fit, hooks, CTAs, converting views,
- and when an agent should start publishing for you.
+ B2C organic social media marketing for AI agents. TikTok and Instagram growth
+ coach: account setup, 7-day warmup, content-market fit, hooks, CTAs, converting
+ views to customers, then PostLake when the agent is ready to publish.
 last-updated: 2026-08-31
 ---
 
-# PostLake growth: a week of tutorials, then an agent that can post
+# B2C Organic Social Media Marketing
 
 This skill is a coach. It walks a human (and the agent they run) through a
 week of setup and warmup, then through content-market fit, hooks, CTAs and
@@ -230,7 +229,7 @@ Rules that protect reach:
 - Space posts on the same account (TikTok restrictions and X spam blocks
  are pacing problems, not tool problems)
 
-When volume is the bottleneck, switch to the `postlake-operator` skill.
+When volume is the bottleneck, switch to the `multi-account-operator` skill.
 
 ## How the agent should use PostLake
 
@@ -250,7 +249,7 @@ in plugin config.
 
 ## Performance log
 
-Keep `workspace/memory/postlake-growth-log.md`:
+Keep `workspace/memory/b2c-social-log.md`:
 
 - Post id, platform, caption, format
 - Views, likes, saves, comments
