@@ -1,59 +1,59 @@
 {
-  "id": "postlake",
-  "name": "PostLake",
-  "description": "Publish, schedule and measure posts across X, LinkedIn, Instagram, TikTok, Facebook, Threads, Bluesky, YouTube and Pinterest from OpenClaw.",
-  "version": "0.1.0",
-  "icon": "https://postlake.dev/brand/icon-512.png",
-  "configSchema": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "apiKey": {
-        "type": "string",
-        "description": "PostLake API key (sk_live_...). Create one at https://app.postlake.dev/app/keys"
-      },
-      "baseUrl": {
-        "type": "string",
-        "description": "API base URL. Only change this for local development.",
-        "default": "https://api.postlake.dev"
-      }
-    },
-    "required": ["apiKey"]
+ "id": "postlake",
+ "name": "PostLake",
+ "description": "Publish, schedule and measure posts across X, LinkedIn, Instagram, TikTok, Facebook, Threads, Bluesky, YouTube and Pinterest from OpenClaw.",
+ "version": "0.1.0",
+ "icon": "https://postlake.dev/brand/icon-512.png",
+ "configSchema": {
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+   "apiKey": {
+    "type": "string",
+    "description": "PostLake API key (sk_live_...). Create one at https://app.postlake.dev/app/keys"
+   },
+   "baseUrl": {
+    "type": "string",
+    "description": "API base URL. Only change this for local development.",
+    "default": "https://api.postlake.dev"
+   }
   },
-  "contracts": {
-    "tools": [
-      "postlake_accounts",
-      "postlake_upload_media",
-      "postlake_post",
-      "postlake_list_posts",
-      "postlake_get_post"
-    ]
+  "required": ["apiKey"]
+ },
+ "contracts": {
+  "tools": [
+   "postlake_accounts",
+   "postlake_upload_media",
+   "postlake_post",
+   "postlake_list_posts",
+   "postlake_get_post"
+  ]
+ },
+ "toolMetadata": {
+  "postlake_accounts": {
+   "configSignals": [
+    { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
+   ]
   },
-  "toolMetadata": {
-    "postlake_accounts": {
-      "configSignals": [
-        { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
-      ]
-    },
-    "postlake_upload_media": {
-      "configSignals": [
-        { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
-      ]
-    },
-    "postlake_post": {
-      "configSignals": [
-        { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
-      ]
-    },
-    "postlake_list_posts": {
-      "configSignals": [
-        { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
-      ]
-    },
-    "postlake_get_post": {
-      "configSignals": [
-        { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
-      ]
-    }
+  "postlake_upload_media": {
+   "configSignals": [
+    { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
+   ]
+  },
+  "postlake_post": {
+   "configSignals": [
+    { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
+   ]
+  },
+  "postlake_list_posts": {
+   "configSignals": [
+    { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
+   ]
+  },
+  "postlake_get_post": {
+   "configSignals": [
+    { "rootPath": "plugins.entries.postlake.config", "required": ["apiKey"] }
+   ]
   }
+ }
 }

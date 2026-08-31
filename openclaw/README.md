@@ -1,7 +1,7 @@
 # PostLake plugin for OpenClaw
 
 Publish, schedule and measure social posts across X, LinkedIn, Instagram, TikTok,
-Facebook, Threads, Bluesky, YouTube and Pinterest — one API, one normalised
+Facebook, Threads, Bluesky, YouTube and Pinterest: one API, one normalised
 response per network.
 
 ## Install
@@ -18,14 +18,14 @@ at [app.postlake.dev/app/channels](https://app.postlake.dev/app/channels).
 
 ```json5
 {
-  plugins: {
-    entries: {
-      postlake: {
-        enabled: true,
-        config: { apiKey: "sk_live_..." }
-      }
-    }
+ plugins: {
+  entries: {
+   postlake: {
+    enabled: true,
+    config: { apiKey: "sk_live_..." }
+   }
   }
+ }
 }
 ```
 
@@ -46,8 +46,8 @@ comments and account connect stay in the dashboard or at
 ## Notes
 
 - Prefer `profile` (a named brand) over hunting for `acc_…` ids.
-- Always send an idempotency key — retries never double-post.
+- Always send an idempotency key: retries never double-post.
 - Each network reports independently in `targets[]`. A failure on one does not
-  stop the others.
+ stop the others.
 
 MIT licensed. Source: [PostLake/postlake-mcp](https://github.com/PostLake/postlake-mcp)
