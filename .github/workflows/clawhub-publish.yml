@@ -1,0 +1,26 @@
+name: Publish to ClawHub
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Preview without publishing
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+
+jobs:
+  publish:
+    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@main
+    with:
+      owner: postlake
+      root: skills
+      dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+      categories: communication,development,integrations
+      topics: social-media,mcp,postlake,publishing,analytics
+      changelog: Sync from PostLake/postlake-mcp
+    secrets:
+      clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}
