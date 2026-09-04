@@ -1,23 +1,60 @@
-# PostLake — MCP server & agent skills for social media
+# PostLake: the social operating system for AI agents
 
-**PostLake is the social media API for AI agents.** One integration to publish,
-schedule, and measure across every network — X, LinkedIn, Instagram, TikTok,
-Facebook, Threads, Bluesky, YouTube and Pinterest — with one normalised response
-shape an agent can reason over instead of nine different error formats.
+**Give an agent one reliable way to run social.** PostLake lets agents publish,
+schedule, monitor, discover, reply, moderate, and learn across X, LinkedIn,
+Instagram, TikTok, Facebook, Threads, Bluesky, YouTube, and Pinterest.
 
-This repo holds the **agent skills** and documents the **hosted MCP server**.
+One connection gives an agent one normalised contract instead of nine platform
+SDKs, nine auth models, and nine incompatible result shapes. It can act with a
+hosted MCP server, a drop-in agent skill, or the REST API.
 
-- 🔌 **MCP server:** `https://api.postlake.dev/mcp` (streamable-http, OAuth)
-- 📚 **Docs:** https://postlake.dev/docs/
-- 🌐 **Site:** https://postlake.dev
-- 📖 **For LLMs:** https://postlake.dev/llms.txt
+> An agent can plan a campaign, validate each destination before it spends a
+> credit, publish or save a draft for approval, confirm asynchronous posts,
+> read conversations and comments, handle what needs a response, and use the
+> results to decide what to do next.
 
----
+- **Hosted MCP:** `https://api.postlake.dev/mcp`
+- **Documentation:** https://docs.postlake.dev
+- **Website:** https://postlake.dev
+- **Machine-readable docs:** https://postlake.dev/llms.txt
+- **MCP Registry:** `dev.postlake/social`
 
-## MCP configuration
+## Why agents use PostLake
 
-PostLake is a **remote** MCP server — there is nothing to install, run, or
-self-host. Point your client at the URL and approve once over OAuth:
+### One contract, every network
+
+Post once or fan out to every connected network. Each target has the same
+state, URL, time, and error shape, so an agent handles the result once rather
+than writing platform-specific recovery logic.
+
+### Safe to let an agent act
+
+`validate_post` provides a free dry run before publishing. Idempotency keys
+make retries safe. Drafts support a human approval step. `confirm_post` checks
+an asynchronous provider after it accepts a post, and every action reports the
+individual target result rather than hiding partial failure.
+
+### Not just a publishing endpoint
+
+An agent can read a unified feed of notifications, direct messages, comments,
+and post performance. It can then reply, moderate, engage, research a topic,
+or inspect an account before it acts. Social management stays in the same
+workflow as publishing.
+
+### Human control where it belongs
+
+OAuth makes the account owner approve a connection in the browser. `get_connect_link`
+lets an agent send them directly to that approval step. Owners can revoke an
+agent, manage channels, and set agent limits from PostLake. An agent never
+needs a social-network password.
+
+## Start in minutes
+
+### Hosted MCP: Cursor, Claude, ChatGPT, Gemini, Copilot, and more
+
+PostLake is a remote Streamable HTTP MCP server. Nothing is installed, run, or
+self-hosted. Add this server in your MCP client, then complete the PostLake
+OAuth approval once.
 
 ```json
 {
@@ -29,141 +66,125 @@ self-host. Point your client at the URL and approve once over OAuth:
 }
 ```
 
-> **Note:** PostLake is not launched with a local `command`. Any config that runs
-> `npx` to start this server is incorrect — the server is hosted at the URL above.
-> (The `npx skills add …` command further down installs the optional *agent
-> skills*; it does not start an MCP server.)
+#### Cursor
 
----
+Open **Settings -> Tools & MCP -> New MCP server**, add the configuration above,
+then select **Connect** for PostLake and approve the browser sign-in.
 
-## Quick start — MCP
-
-Your agent never sees an API key; OAuth handles authorisation.
-
-### Claude
+#### Claude Code
 
 ```bash
-claude mcp add postlake https://api.postlake.dev/mcp
+claude mcp add --transport http postlake https://api.postlake.dev/mcp
 ```
 
-Or in Claude Desktop: **Settings → Connectors → Add custom connector**.
+#### Other MCP clients
 
-### Cursor
+Add `https://api.postlake.dev/mcp` as a remote MCP server. The initial OAuth
+challenge opens the host's sign-in and approval flow. Full setup instructions:
+https://docs.postlake.dev/mcp
 
-`~/.cursor/mcp.json`:
+### Drop-in skills: coding agents
 
-```json
-{
-  "mcpServers": {
-    "postlake": { "url": "https://api.postlake.dev/mcp" }
-  }
-}
-```
-
-### Gemini CLI
-
-```bash
-gemini mcp add postlake https://api.postlake.dev/mcp
-```
-
-### VS Code / GitHub Copilot
-
-**Agent mode → MCP servers → Add**, then paste the same URL.
-
-### Header auth (for clients without OAuth)
-
-```
-POST https://api.postlake.dev/v1/mcp
-Authorization: Bearer <your_api_key>
-```
-
-Then just ask:
-
-> *"Post this photo to Instagram and LinkedIn, schedule a follow-up for Friday
-> at 9am, and tell me which of last week's posts did best."*
-
----
-
-## The toolset
-
-A focused set — everything an agent needs to publish and reason about the result,
-and nothing it doesn't. Account setup and connecting networks stay in the
-dashboard, where a human belongs.
-
-| Group | Tools |
-|---|---|
-| **Publish & schedule** | `create_post` · `edit_post` · `cancel_post` · `get_post` · `list_posts` |
-| **Discover & validate** | `get_platform_capabilities` · `validate_post` · `get_publish_info` |
-| **Channels & media** | `list_social_accounts` · `list_account_targets` · `list_profiles` · `upload_media` |
-| **Analytics** | `get_analytics` · `get_post_analytics` |
-| **Identity** | `whoami` |
-
-**Agent-safe by design.** Publishing is idempotent — pass an `Idempotency-Key`
-and a retrying or restarting agent can never double-post. Every post returns a
-per-platform `state` and `url` in one shape, so there's no per-network branching.
-
----
-
-## Agent skills
-
-For coding agents (Claude Code, Cursor, Codex, Windsurf) that use file-based
-skills rather than MCP:
+Install PostLake's agent skills for Claude Code, Cursor, Codex, Windsurf, and
+other skills-compatible coding agents:
 
 ```bash
 npx skills add postlake/postlake-mcp --all
 ```
 
-| Skill | What your agent can do |
-|-------|------------------------|
-| `postlake-accounts`  | List connected accounts; see what platforms are ready |
-| `postlake-publish`   | Publish a post now to one or more platforms |
-| `postlake-schedule`  | Schedule for later; list, reschedule, or cancel |
-| `postlake-media`     | Upload an image or video and attach it to a post |
-| `postlake-analytics` | Read per-post and cross-platform performance |
+Set `POSTLAKE_API_KEY` in the agent's runtime, then ask it to handle social
+work in plain language. The skills cover accounts, publishing, scheduling,
+media, and analytics.
 
-Set your key once:
+### REST API: custom agent runtimes
 
-```bash
-export POSTLAKE_API_KEY="sk_live_…"
-```
+Use `https://api.postlake.dev/v1` from LangGraph, CrewAI, AutoGen, OpenAI tool
+calls, or any HTTPS client. The REST API and MCP server work against the same
+profiles, channels, posts, and safety rules.
 
-Create one at https://app.postlake.dev/app/keys.
+## What an agent can do
 
----
+The MCP server currently provides 53 focused tools. They are designed around
+social outcomes rather than individual platform APIs.
 
-## Three ways to connect
+| Outcome | Tools |
+| --- | --- |
+| **Understand the account** | `whoami`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `check_allowance` |
+| **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account`, `create_api_key` |
+| **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
+| **Publish and schedule** | `create_post`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `cancel_post`, `publish_draft`, `delete_post` |
+| **Media** | `upload_media`, `upload_media_batch` |
+| **Unified Inbox** | `list_notifications`, `mark_notifications_seen`, `list_conversations`, `read_conversation`, `mark_conversation_read`, `send_message`, `read_comments`, `reply_to_comment`, `hide_comment`, `delete_comment` |
+| **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
+| **Engage and manage presence** | `engage`, `update_profile` |
+| **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
+| **Measure and improve** | `get_post_analytics`, `get_analytics` |
 
-| | Best for | Auth |
-|---|---|---|
-| **MCP server** | Claude, Cursor, ChatGPT, Gemini, any MCP client | OAuth (no key exposed) |
-| **Agent skills** (this repo) | Claude Code, Cursor, Codex, Windsurf | `POSTLAKE_API_KEY` |
-| **REST API** | LangChain, CrewAI, AutoGen, OpenAI tools, any language | Bearer key |
+## An agent workflow that does not break trust
 
-REST base URL: `https://api.postlake.dev/v1` — see the
-[full docs](https://postlake.dev/docs/) and per-framework guides for
-[LangChain](https://postlake.dev/guides/langchain),
-[CrewAI](https://postlake.dev/guides/crewai),
-[AutoGen](https://postlake.dev/guides/autogen),
-[Python](https://postlake.dev/guides/python) and
-[Node.js](https://postlake.dev/guides/nodejs).
+1. Call `whoami` and `list_social_accounts` to understand the account, limits,
+   connected channels, and current readiness.
+2. If a human still needs to connect a channel, call `get_connect_link` and send
+   them the short-lived approval URL. Do not ask them to hunt through a dashboard.
+3. Call `get_platform_capabilities` and `validate_post` before creating a
+   multi-network post. PostLake returns each target's exact constraint and fix.
+4. Use `create_post` to publish, schedule, or save a `draft` for human review.
+   Include an idempotency key so a retry cannot double-post.
+5. If a platform is processing asynchronously, call `confirm_post` to obtain
+   the provider-confirmed state without waiting for a public URL.
+6. Use `list_notifications`, `list_conversations`, and `read_comments` to see
+   what needs attention. Reply, moderate, or engage only where the platform
+   supports it.
+7. Use `get_analytics` and `get_post_analytics` to turn results into the next
+   informed action, not a spreadsheet someone has to interpret later.
 
----
+## Example prompts
 
-## Security
+- "Check every connected channel, then tell me what needs a human approval."
+- "Draft a launch post for LinkedIn, Instagram, Threads, and TikTok. Validate
+  it, save it as a draft, and show me the platform-specific changes."
+- "Read new DMs and comments. Give me concise reply drafts, but do not send
+  anything until I approve them."
+- "Find what people are saying about this topic, inspect the strongest three
+  accounts, then propose a post that adds something useful."
+- "Confirm yesterday's TikTok post, then compare its performance with the rest
+  of the week and recommend the next post."
 
-Agents authorise over OAuth, so an API key is never pasted into a chat or seen by
-the model. Every agent you authorise appears under **Connected Apps** in your
-dashboard — revoke any one and its access is cut off immediately.
+## Platform-aware, not platform-blind
+
+PostLake knows the constraints that cause social automations to fail in real
+life: media types, image counts, caption limits, creator-level TikTok settings,
+network-specific privacy options, post destinations, async publishing, and
+whether a given connection can read, search, message, or engage.
+
+When a platform cannot perform an action, PostLake says so in the response.
+An empty list never silently means a network was not read. A partial publish
+does not pretend every destination succeeded. Agents get the information they
+need to recover safely.
+
+## Security and ownership
+
+For interactive MCP clients, PostLake uses OAuth and PKCE. The account owner
+approves each connected agent once and can revoke it from the dashboard at any
+time. OAuth tokens are scoped to that client and refresh automatically.
+
+For unattended services, use a PostLake API key in the service's secret store,
+not in a prompt or source file. Keys have account-level access, so use a named
+key per trusted service and revoke it when it is no longer needed.
 
 ## Pricing
 
-Usage-based credits: **1 credit per post**, with a free tier and no card to start.
-X costs more because it's the only network that charges per post.
-See https://postlake.dev/pricing.
+Every plan includes the MCP server and agent access. Start with 20 free credits
+per month and no card. Credits are charged when publishing or where a platform
+charges for a particular operation. See the current pricing and credit rates at
+https://postlake.dev/pricing.
 
----
+## Documentation
 
-Listed in the [official MCP Registry](https://registry.modelcontextprotocol.io)
-as `dev.postlake/social`.
+- MCP setup and tool reference: https://docs.postlake.dev/mcp
+- Quickstart: https://docs.postlake.dev/quickstart
+- Publishing and schedules: https://docs.postlake.dev/publishing
+- Reading, Inbox, and engagement: https://docs.postlake.dev/reading
+- API reference: https://docs.postlake.dev
 
-Made by [CrumbleLake](https://postlake.dev). Issues and PRs welcome.
+Built by [PostLake](https://postlake.dev). Issues and pull requests are welcome.
