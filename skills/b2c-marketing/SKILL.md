@@ -67,8 +67,9 @@ Goal: PostLake can see the brand. Nothing public goes out.
 3. Create an API key at https://app.postlake.dev/app/keys, or connect the
   hosted MCP at `https://api.postlake.dev/mcp` and approve OAuth once.
 4. In the Agents page, set what this agent may touch: which profiles, which
-  networks, daily cap. Revoke is one click. That is the point of an
-  agent-native API.
+  networks, daily cap, and whether every post requires human approval. The
+  approval rule is enforced by PostLake, not left to the prompt. Revoke is one
+  click. That is the point of an agent-native API.
 5. Confirm with `postlake_accounts` / `GET /v1/social-accounts`. You should
   see `status: "active"`. If you see `needs_reauth`, reconnect in the
   dashboard. Do not post.

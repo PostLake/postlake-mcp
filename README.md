@@ -30,9 +30,11 @@ than writing platform-specific recovery logic.
 ### Safe to let an agent act
 
 `validate_post` provides a free dry run before publishing. Idempotency keys
-make retries safe. Drafts support a human approval step. `confirm_post` checks
-an asynchronous provider after it accepts a post, and every action reports the
-individual target result rather than hiding partial failure.
+make retries safe. Owners can require approval on an OAuth connection, which
+forces every publish request from that agent into a draft and prevents it from
+approving its own work. `confirm_post` checks an asynchronous provider after
+it accepts a post, and every action reports the individual target result rather
+than hiding partial failure.
 
 ### Not just a publishing endpoint
 
@@ -45,8 +47,9 @@ workflow as publishing.
 
 OAuth makes the account owner approve a connection in the browser. `get_connect_link`
 lets an agent send them directly to that approval step. Owners can revoke an
-agent, manage channels, and set agent limits from PostLake. An agent never
-needs a social-network password.
+agent, manage channels, set agent limits, and require approval from PostLake.
+An OAuth agent cannot create an unrestricted account key to bypass those
+controls, and never needs a social-network password.
 
 ## Start in minutes
 
@@ -110,7 +113,7 @@ social outcomes rather than individual platform APIs.
 | Outcome | Tools |
 | --- | --- |
 | **Understand the account** | `whoami`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `check_allowance` |
-| **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account`, `create_api_key` |
+| **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
 | **Publish and schedule** | `create_post`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `cancel_post`, `publish_draft`, `delete_post` |
 | **Media** | `upload_media`, `upload_media_batch` |
@@ -119,6 +122,10 @@ social outcomes rather than individual platform APIs.
 | **Engage and manage presence** | `engage`, `update_profile` |
 | **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
 | **Measure and improve** | `get_post_analytics`, `get_analytics` |
+
+Account-key-authenticated MCP callers can also use `create_api_key` to hand off
+to another trusted service. OAuth agents do not see or receive this tool because
+an account key would bypass their owner-set limits.
 
 ## An agent workflow that does not break trust
 
@@ -129,7 +136,9 @@ social outcomes rather than individual platform APIs.
 3. Call `get_platform_capabilities` and `validate_post` before creating a
    multi-network post. PostLake returns each target's exact constraint and fix.
 4. Use `create_post` to publish, schedule, or save a `draft` for human review.
-   Include an idempotency key so a retry cannot double-post.
+   If the owner enabled Require my approval, PostLake saves a draft even when
+   the agent does not request one. Include an idempotency key so a retry cannot
+   double-post.
 5. If a platform is processing asynchronously, call `confirm_post` to obtain
    the provider-confirmed state without waiting for a public URL.
 6. Use `list_notifications`, `list_conversations`, and `read_comments` to see
@@ -166,7 +175,10 @@ need to recover safely.
 
 For interactive MCP clients, PostLake uses OAuth and PKCE. The account owner
 approves each connected agent once and can revoke it from the dashboard at any
-time. OAuth tokens are scoped to that client and refresh automatically.
+time. OAuth tokens are scoped to that client and refresh automatically. Owners
+can enforce profile, platform, daily-credit, pack-credit, and approval limits.
+An approval-gated agent cannot publish its own drafts or mint an unrestricted
+account API key.
 
 For unattended services, use a PostLake API key in the service's secret store,
 not in a prompt or source file. Keys have account-level access, so use a named
