@@ -97,7 +97,7 @@ npx skills add postlake/postlake-mcp --all
 
 Set `POSTLAKE_API_KEY` in the agent's runtime, then ask it to handle social
 work in plain language. The skills cover accounts, publishing, scheduling,
-media, and analytics.
+media, inbox conversations, and analytics.
 
 ### REST API: custom agent runtimes
 
