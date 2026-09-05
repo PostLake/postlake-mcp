@@ -19,11 +19,26 @@ Use PostLake's normalized inbox instead of calling four network APIs.
 Conversation ids are scoped to one connected account. Never guess the account
 or reuse a conversation id with another connection.
 
+## REST equivalents
+
+| Action | REST endpoint |
+| --- | --- |
+| List conversations | `GET /v1/conversations` |
+| Find or open a thread | `POST /v1/conversations` with `account` and `handle` |
+| Read messages | `GET /v1/conversations/{id}/messages?account=acc_…` |
+| Mark read | `POST /v1/conversations/{id}/read` |
+| Send a message | `POST /v1/conversations/{id}/messages` |
+
+Reading, marking, and sending require the connected `account` id because a
+conversation id has meaning only within that connection.
+
 ## What the response means
 
 - `fromMe` identifies which side sent a message. Do not infer this from handles.
 - `content` can describe an attachment, shared media, or an unsupported provider
   payload. Do not claim that an empty `text` means the message itself was empty.
+- The optional shape is
+  `{ "kind": "attachment" | "shared_media" | "unsupported", "label": "…", "url": "…" | null }`.
 - A `problems` entry means PostLake could not read a network. Report it. An empty
   `items` array without a problem means the network answered with no threads.
 

@@ -147,6 +147,20 @@ an account key would bypass their owner-set limits.
 7. Use `get_analytics` and `get_post_analytics` to turn results into the next
    informed action, not a spreadsheet someone has to interpret later.
 
+### Direct messages
+
+Facebook, Instagram, X, and Bluesky use one normalized conversation shape.
+Agents list threads with `list_conversations`, open one with
+`read_conversation`, finish it with `mark_conversation_read`, and reply with
+`send_message`. A message can include `content` for an attachment, shared
+media, or a provider payload that PostLake cannot safely flatten to text.
+
+Facebook and Instagram can deliver `message.received` webhooks. X and Bluesky
+do not push inbound messages to PostLake, so poll `list_conversations` on a
+schedule. Sending a DM on X costs 6 credits; sending on the other supported
+inbox networks does not spend credits. Full REST and MCP guidance:
+https://docs.postlake.dev/messages.
+
 ## Example prompts
 
 - "Check every connected channel, then tell me what needs a human approval."
@@ -188,8 +202,9 @@ key per trusted service and revoke it when it is no longer needed.
 
 Every plan includes the MCP server and agent access. Start with 20 free credits
 per month and no card. Credits are charged when publishing or where a platform
-charges for a particular operation. See the current pricing and credit rates at
-https://postlake.dev/pricing.
+charges for a particular operation. On X, `send_message` costs 6 credits; sends
+on Facebook, Instagram, and Bluesky do not spend credits. See current pricing
+and credit rates at https://postlake.dev/pricing.
 
 ## Documentation
 

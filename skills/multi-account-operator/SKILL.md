@@ -69,10 +69,11 @@ days. Image sent to YouTube fails: videos only. Set
 `platformOptions.youtube.title`.
 
 **X.** Spam block from posting too fast, too repetitive, or link-heavy.
-Slow down. Vary `textOverrides.x`. X is the only PostLake network that
-costs extra credits. On a free plan an X target returns
+Slow down. Vary `textOverrides.x`. X is the only PostLake network where
+publishing costs extra credits. On a free plan an X target returns
 `entitlement_exceeded` and the other networks still go out. Do not treat
-that as a total failure.
+that as a total failure. Separately, sending a direct message on X costs
+6 credits.
 
 **Instagram / Facebook / Threads.** Token expiry is the common one.
 `status: "needs_reauth"` on `GET /v1/social-accounts`. Human reconnects
@@ -175,7 +176,9 @@ Keys: https://app.postlake.dev/app/keys
 Say it early:
 
 - No client approval queues and no client-facing reporting
-- No unified inbox in this skill (PostLake can read comments and DMs via
- MCP tools; this operator skill is for publish health)
+- No unified inbox in this skill. Use the `postlake-inbox` skill or the hosted
+ MCP tools for Facebook, Instagram, X, and Bluesky DMs. Meta can push inbound
+ message webhooks; X and Bluesky require polling. This operator skill is for
+ publish health.
 - Scheduled posts cannot attach trending TikTok or Instagram audio. That
  lives in those apps. Post those natively.
