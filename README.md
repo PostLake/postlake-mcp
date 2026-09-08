@@ -18,6 +18,7 @@ hosted MCP server, a drop-in agent skill, or the REST API.
 - **Website:** https://postlake.dev
 - **Machine-readable docs:** https://postlake.dev/llms.txt
 - **MCP Registry:** `dev.postlake/social`
+- **Grok Build:** install `postlake` from the plugin marketplace, or add this repo as a marketplace source
 
 ## Why agents use PostLake
 
@@ -79,6 +80,34 @@ then select **Connect** for PostLake and approve the browser sign-in.
 ```bash
 claude mcp add --transport http postlake https://api.postlake.dev/mcp
 ```
+
+#### Grok Build
+
+This repository is a Grok Build plugin. It ships the hosted MCP server and the
+agent skills. No local process, no shell hooks, no API key in chat.
+
+Add this repo as a marketplace, then install `postlake`:
+
+```bash
+grok plugin marketplace add PostLake/postlake-mcp
+grok plugin install postlake --trust
+```
+
+Inside Grok Build you can also browse `/marketplace` after the official xAI
+catalog lists it.
+
+The MCP server is `https://api.postlake.dev/mcp` (Streamable HTTP). On first
+use, Grok opens PostLake OAuth in the browser. The account owner approves the
+agent once and can revoke it from https://app.postlake.dev/app/agents.
+
+This plugin calls only:
+
+- `https://api.postlake.dev` (MCP and REST)
+- `https://postlake.dev` and `https://docs.postlake.dev` (docs the skills cite)
+- `https://app.postlake.dev` (OAuth approval and dashboard)
+
+`openclaw/` in this repo is a separate OpenClaw package. Grok Build does not
+load it.
 
 #### Other MCP clients
 
@@ -184,6 +213,16 @@ When a platform cannot perform an action, PostLake says so in the response.
 An empty list never silently means a network was not read. A partial publish
 does not pretend every destination succeeded. Agents get the information they
 need to recover safely.
+
+## What this repository contains
+
+| Path | Used by |
+| --- | --- |
+| `skills/` | Claude Code, Cursor, Codex, Windsurf (`npx skills add postlake/postlake-mcp --all`) |
+| `.mcp.json` | Grok Build, Claude Code plugins, Cursor plugins. Hosted MCP only. |
+| `.grok-plugin/` | Grok Build plugin manifest |
+| `.claude-plugin/` | Claude Code / Cursor plugin manifest |
+| `openclaw/` | OpenClaw only. Not part of the Grok or Claude plugin. |
 
 ## Security and ownership
 

@@ -1,0 +1,18 @@
+{
+  "name": "postlake",
+  "description": "PostLake plugin for Grok Build: hosted MCP plus agent skills.",
+  "owner": {
+    "name": "PostLake"
+  },
+  "plugins": [
+    {
+      "name": "postlake",
+      "description": "Hosted MCP and skills so an agent can publish, schedule, reply, and measure social posts across connected networks.",
+      "category": "productivity",
+      "source": "./",
+      "homepage": "https://postlake.dev",
+      "keywords": ["postlake", "postlake mcp", "postlake social"],
+      "domains": ["postlake.dev", "api.postlake.dev", "docs.postlake.dev", "app.postlake.dev"]
+    }
+  ]
+}

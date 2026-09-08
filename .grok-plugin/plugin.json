@@ -1,0 +1,18 @@
+{
+  "name": "postlake",
+  "version": "1.4.0",
+  "description": "Hosted MCP and skills so an agent can publish, schedule, reply, and measure social posts across connected networks.",
+  "author": {
+    "name": "PostLake",
+    "url": "https://postlake.dev"
+  },
+  "repository": "https://github.com/PostLake/postlake-mcp",
+  "homepage": "https://postlake.dev",
+  "license": "MIT",
+  "keywords": [
+    "postlake",
+    "postlake mcp",
+    "postlake social"
+  ],
+  "mcpServers": "./.mcp.json"
+}

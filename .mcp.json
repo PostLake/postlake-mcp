@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "postlake": {
+      "type": "http",
+      "url": "https://api.postlake.dev/mcp"
+    }
+  }
+}
