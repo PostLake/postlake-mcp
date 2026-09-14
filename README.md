@@ -136,12 +136,12 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 53 focused tools. They are designed around
+The MCP server currently provides 55 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
 | --- | --- |
-| **Understand the account** | `whoami`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `check_allowance` |
+| **Understand the account** | `whoami`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `search_facebook_pages`, `check_allowance` |
 | **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
 | **Publish and schedule** | `create_post`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `cancel_post`, `publish_draft`, `delete_post` |
