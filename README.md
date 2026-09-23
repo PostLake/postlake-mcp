@@ -152,6 +152,12 @@ social outcomes rather than individual platform APIs.
 | **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
 | **Measure and improve** | `get_post_analytics`, `get_analytics` |
 
+`list_posts` supports bounded cursor pagination and filters for status, agent,
+profile, network, dates, approval state, and a case-insensitive literal caption
+search with `q`. This lets an agent inspect publishing history without loading
+an entire account's posts into one tool response. The REST endpoint
+`GET /v1/posts` uses the same search and paging behavior.
+
 Account-key-authenticated MCP callers can also use `create_api_key` to hand off
 to another trusted service. OAuth agents do not see or receive this tool because
 an account key would bypass their owner-set limits.
