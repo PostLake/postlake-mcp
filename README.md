@@ -136,12 +136,12 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 55 focused tools. They are designed around
+The MCP server currently provides 61 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
 | --- | --- |
-| **Understand the account** | `whoami`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `search_facebook_pages`, `check_allowance` |
+| **Understand the account** | `whoami`, `set_my_name`, `get_changelog`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `search_facebook_pages`, `check_allowance` |
 | **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
 | **Publish and schedule** | `create_post`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `cancel_post`, `publish_draft`, `delete_post` |
@@ -150,7 +150,12 @@ social outcomes rather than individual platform APIs.
 | **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
 | **Engage and manage presence** | `engage`, `update_profile` |
 | **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
+| **Facebook Page live broadcasts** | `create_live_broadcast`, `start_live_broadcast`, `list_live_broadcasts`, `get_live_broadcast`, `end_live_broadcast` |
 | **Measure and improve** | `get_post_analytics`, `get_analytics` |
+
+`set_my_name` changes only the authenticated agent's display name. The account
+owner can set and lock that name in Agent Control. Renaming does not change the
+underlying API key or OAuth client identity.
 
 `list_posts` supports bounded cursor pagination and filters for status, agent,
 profile, network, dates, approval state, and a case-insensitive literal caption
