@@ -136,7 +136,7 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 61 focused tools. They are designed around
+The MCP server currently provides 64 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
@@ -149,13 +149,21 @@ social outcomes rather than individual platform APIs.
 | **Unified Inbox** | `list_notifications`, `mark_notifications_seen`, `list_conversations`, `read_conversation`, `mark_conversation_read`, `send_message`, `read_comments`, `reply_to_comment`, `hide_comment`, `delete_comment` |
 | **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
 | **Engage and manage presence** | `engage`, `update_profile` |
-| **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
+| **Commerce, events, and collaborations** | `list_products`, `list_branded_partners`, `list_facebook_partnership_permissions`, `list_facebook_branded_content_posts`, `act_on_facebook_partnership_permission`, `list_ad_accounts`, `list_events`, `create_event`, `find_creators` |
 | **Facebook Page live broadcasts** | `create_live_broadcast`, `start_live_broadcast`, `list_live_broadcasts`, `get_live_broadcast`, `end_live_broadcast` |
 | **Measure and improve** | `get_post_analytics`, `get_analytics` |
 
 `set_my_name` changes only the authenticated agent's display name. The account
 owner can set and lock that name in Agent Control. Renaming does not change the
 underlying API key or OAuth client identity.
+
+For Facebook Partnership Ads, tagged posts and permission grants are separate.
+Use `list_facebook_branded_content_posts` to see posts tagging the connected
+brand Page, then `list_facebook_partnership_permissions` to check whether a
+creator Page has approved account-level ad access. The action tool can send,
+cancel, accept, reject, or remove a request only after the owner approves that
+specific Page and action. It does not create an ad or spend money. Meta may
+restrict these calls until it grants the app and Page the required access.
 
 `list_posts` supports bounded cursor pagination and filters for status, agent,
 profile, network, dates, approval state, and a case-insensitive literal caption
