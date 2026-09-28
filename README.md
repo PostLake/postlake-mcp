@@ -136,7 +136,7 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 61 focused tools. They are designed around
+The MCP server currently provides 62 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
@@ -144,7 +144,7 @@ social outcomes rather than individual platform APIs.
 | **Understand the account** | `whoami`, `set_my_name`, `get_changelog`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `search_facebook_pages`, `check_allowance` |
 | **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
-| **Publish and schedule** | `create_post`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `edit_scheduled_posts_bulk`, `cancel_post`, `publish_draft`, `delete_post` |
+| **Publish and schedule** | `create_post`, `create_scheduled_calendar`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `edit_scheduled_posts_bulk`, `cancel_post`, `publish_draft`, `delete_post` |
 | **Media** | `upload_media`, `upload_media_batch` |
 | **Unified Inbox** | `list_notifications`, `mark_notifications_seen`, `list_conversations`, `read_conversation`, `mark_conversation_read`, `send_message`, `read_comments`, `reply_to_comment`, `hide_comment`, `delete_comment` |
 | **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
@@ -172,8 +172,11 @@ operation. Preview first with `dryRun: true`, inspect the per-post before and
 after values, then apply with the returned `snapshot`. It can change captions,
 per-network captions, exact destination accounts, campaign and asset metadata,
 or shift scheduled UTC instants. If a selected post changes before apply, the
-whole edit is rejected. This does not create a calendar or atomically cancel
-posts; use the documented REST operations for those separate workflows.
+whole edit is rejected. `create_scheduled_calendar` previews and creates up to
+200 scheduled posts in one transaction, using explicit times or an elapsed-UTC
+cadence. Apply its preview snapshot with a unique idempotency key. The REST
+bulk cancellation endpoint also removes an exact selected batch atomically.
+Creating a new calendar and cancelling an old one remain separate operations.
 
 Account-key-authenticated MCP callers can also use `create_api_key` to hand off
 to another trusted service. OAuth agents do not see or receive this tool because
