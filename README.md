@@ -136,7 +136,7 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 62 focused tools. They are designed around
+The MCP server currently provides 63 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
@@ -145,7 +145,7 @@ social outcomes rather than individual platform APIs.
 | **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
 | **Publish and schedule** | `create_post`, `create_scheduled_calendar`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `edit_scheduled_posts_bulk`, `cancel_post`, `publish_draft`, `delete_post` |
-| **Media** | `upload_media`, `upload_media_batch` |
+| **Media** | `upload_media`, `upload_media_batch`, `manage_media` |
 | **Unified Inbox** | `list_notifications`, `mark_notifications_seen`, `list_conversations`, `read_conversation`, `mark_conversation_read`, `send_message`, `read_comments`, `reply_to_comment`, `hide_comment`, `delete_comment` |
 | **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
 | **Engage and manage presence** | `engage`, `update_profile` |
@@ -181,6 +181,32 @@ Creating a new calendar and cancelling an old one remain separate operations.
 Account-key-authenticated MCP callers can also use `create_api_key` to hand off
 to another trusted service. OAuth agents do not see or receive this tool because
 an account key would bypass their owner-set limits.
+
+## Cancellation, Social Removal And Upload Erasure
+
+These are separate actions. `cancel_post` stops future publication and keeps
+uploaded files. `delete_post` requests supported network removals and reports
+every destination; Instagram and TikTok published posts must be removed in
+their own apps. Neither action erases uploads or refunds spent publishing credits.
+
+Use `delete_post` with `dryRun: true` to preview destination support, then
+obtain owner confirmation and send the returned `snapshot` on apply. Accepted
+removals are remembered on partial results and not repeated on retry.
+
+`manage_media` lists stored files with `action: "list"`. Use
+`action: "preview_delete"` with a media ID to see affected posts and obtain a
+snapshot. Only after the owner confirms irreversible erasure should an agent
+apply `action: "delete"` with that snapshot. Drafts, approval requests and
+pending publications must stop using the file first. Source bytes and stored
+previews are removed; published social copies remain online. Storage failures
+remain retryable. More than 200 saved references require support-assisted erasure.
+
+Uploaded assets retain the existing minimum of 90 days on every open account,
+with longer scheduled-reference protection and no current automatic expiry.
+Explicit owner erasure is an exception, not a routine expiry policy. Sources
+and previews use public URLs. Keep durable originals and never upload secrets.
+Full REST contracts and dashboard directions:
+https://docs.postlake.dev/media#deletion.
 
 ## An agent workflow that does not break trust
 

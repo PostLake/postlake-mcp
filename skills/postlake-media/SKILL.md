@@ -65,6 +65,20 @@ curl -X POST https://api.postlake.dev/v1/posts \
 
 ## Tips
 
+- For removal, distinguish the social post from its uploaded file. Cancelling
+  or retracting a post keeps its uploads and does not refund spent publishing credits.
+- List stored files with `GET /v1/media`. Preview irreversible erasure with
+  `GET /v1/media/{id}/deletion`; only after owner confirmation send its snapshot
+  to `DELETE /v1/media/{id}`. Drafts and pending publication block erasure.
+- MCP provides the same flow through `manage_media`: list, preview_delete,
+  then delete with the confirmed snapshot. Erasure leaves social copies online
+  but removes PostLake previews. Storage failures remain retryable.
+- Uploads retain a minimum of 90 days while the account remains open, extended
+  for scheduled references through terminal outcome plus 30 days if later.
+  There is no automatic expiry. Explicit erasure and legal/security removal
+  are exceptions. Sources are public URLs, not confidential storage. Keep originals.
+  See https://docs.postlake.dev/media#deletion.
+
 - Set the `Content-Type` to the real file type. It's how PostLake validates the
  upload.
 - For video platforms (YouTube/TikTok) upload an mp4 and set a title via
