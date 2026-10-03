@@ -60,6 +60,14 @@ PostLake is a remote Streamable HTTP MCP server. Nothing is installed, run, or
 self-hosted. Add this server in your MCP client, then complete the PostLake
 OAuth approval once.
 
+PostLake supports protocol revisions `2026-07-28`, `2025-11-25`,
+`2025-06-18`, and `2025-03-26`. Existing clients can retain their legacy
+handshake; newer clients use `server/discover` and per-request metadata.
+Both `/mcp` and the API-key compatibility endpoint `/v1/mcp` preserve agent
+identity, approval guardrails and publishing throttles. Tool annotations are
+conservative hints, not permissions. OAuth-connected or restricted agents
+cannot create unrestricted API keys to bypass owner controls.
+
 ```json
 {
   "mcpServers": {
