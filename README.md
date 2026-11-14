@@ -144,22 +144,30 @@ profiles, channels, posts, and safety rules.
 
 ## What an agent can do
 
-The MCP server currently provides 63 focused tools. They are designed around
+The MCP server currently provides 51 focused tools. They are designed around
 social outcomes rather than individual platform APIs.
 
 | Outcome | Tools |
 | --- | --- |
-| **Understand the account** | `whoami`, `set_my_name`, `get_changelog`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `search_facebook_pages`, `check_allowance` |
+| **Understand the account** | `whoami`, `set_my_name`, `get_changelog`, `get_credits`, `list_profiles`, `list_social_accounts`, `get_social_account`, `list_account_targets`, `check_allowance` |
 | **Connect and organise channels** | `create_profile`, `rename_profile`, `delete_profile`, `connect_account`, `get_connect_link`, `disconnect_account` |
 | **Plan and validate** | `get_platform_capabilities`, `get_publish_info`, `validate_post` |
 | **Publish and schedule** | `create_post`, `create_scheduled_calendar`, `get_post`, `confirm_post`, `list_posts`, `edit_post`, `edit_scheduled_posts_bulk`, `cancel_post`, `publish_draft`, `delete_post` |
 | **Media** | `upload_media`, `upload_media_batch`, `manage_media` |
 | **Unified Inbox** | `list_notifications`, `mark_notifications_seen`, `list_conversations`, `read_conversation`, `mark_conversation_read`, `send_message`, `read_comments`, `reply_to_comment`, `hide_comment`, `delete_comment` |
-| **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `search_places`, `list_own_posts`, `list_tagged_posts` |
+| **Discover and understand the network** | `search_posts`, `look_up_profile`, `read_profile_posts`, `list_own_posts` |
 | **Engage and manage presence** | `engage`, `update_profile` |
-| **Commerce, events, and collaborations** | `list_products`, `list_events`, `create_event`, `find_creators` |
-| **Facebook Page live broadcasts** | `create_live_broadcast`, `start_live_broadcast`, `list_live_broadcasts`, `get_live_broadcast`, `end_live_broadcast` |
 | **Measure and improve** | `get_post_analytics`, `get_analytics` |
+
+Facebook, Instagram and Threads focus on publishing, scheduling and
+own-account analytics in this release. Meta messaging, moderation, first
+comments, discovery, shopping, events, Page mentions, branded-content tools
+and live broadcasts are unavailable. Threads published-post deletion is also
+unavailable; cancellation of unpublished schedules remains supported.
+Deferred Meta-only tools are omitted from discovery. Calls from cached tool
+lists return `meta_feature_deferred`. Advertising calls retain
+`meta_ads_deferred`. Reconnecting does not enable deferred features. Other
+networks retain the capabilities advertised by `get_platform_capabilities`.
 
 `set_my_name` changes only the authenticated agent's display name. The account
 owner can set and lock that name in Agent Control. Renaming does not change the
@@ -238,13 +246,13 @@ https://docs.postlake.dev/media#deletion.
 
 ### Direct messages
 
-Facebook, Instagram, X, and Bluesky use one normalized conversation shape.
+Supported non-Meta networks use one normalized conversation shape.
 Agents list threads with `list_conversations`, open one with
 `read_conversation`, finish it with `mark_conversation_read`, and reply with
 `send_message`. A message can include `content` for an attachment, shared
 media, or a provider payload that PostLake cannot safely flatten to text.
 
-Facebook and Instagram can deliver `message.received` webhooks. X and Bluesky
+Meta messaging is unavailable in this release. X and Bluesky
 do not push inbound messages to PostLake, so poll `list_conversations` on a
 schedule. Sending a DM on X costs 6 credits; sending on the other supported
 inbox networks does not spend credits. Full REST and MCP guidance:
